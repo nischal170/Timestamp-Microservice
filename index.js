@@ -23,6 +23,42 @@ app.get("/", function (req, res) {
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
+app.get("/api/:date", function (req, res) {
+  const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+  const unixFormatRegex = /^\d+$/;
+  if(dateFormatRegex.test(req.params.date)){
+    const unixDate=Date.parse(req.params.date);
+    const dateVal = new Date(unixDate);
+    const utcString=dateVal.toUTCString();
+  console.log(typeof(unixDate))
+  res.json({"unix":unixDate,
+    utc:utcString
+  });
+  }
+  else if(unixFormatRegex.test(req.params.date)){
+   const number=Number(req.params.date);
+   const dateVal = new Date(number)
+   const utcString=dateVal.toUTCString();
+
+    res.json({unix:number,
+      utc:utcString
+    });
+  }
+  else {
+    res.json({error:"invalid date"
+    });
+  }
+
+});
+
+app.get("/api/", function (req, res) {
+  const now=Date.now();
+  const dateVal = new Date(now)
+  const utcString=dateVal.toUTCString();
+  res.json({unix: now,
+    utc:utcString
+  });
+});
 
 
 
