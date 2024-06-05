@@ -30,7 +30,6 @@ app.get("/api/:date", function (req, res) {
     const unixDate=Date.parse(req.params.date);
     const dateVal = new Date(unixDate);
     const utcString=dateVal.toUTCString();
-  console.log(typeof(unixDate))
   res.json({"unix":unixDate,
     utc:utcString
   });
