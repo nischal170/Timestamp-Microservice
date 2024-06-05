@@ -45,8 +45,16 @@ app.get("/api/:date", function (req, res) {
     });
   }
   else {
-    res.json({error:"invalid date"
-    });
+   // check if the date can be parsed using new Date(date_string)
+   if (new Date(req.params.date) == "Invalid Date") {
+     res.json({ error: "Invalid Date" });
+   } else {
+      const dateVal = new Date(req.params.date)
+      const utcString=dateVal.toUTCString();
+      res.json({unix: Date.parse(req.params.date),
+        utc:utcString
+      });
+    }
   }
 
 });
